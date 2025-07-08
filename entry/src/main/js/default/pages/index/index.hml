@@ -1,34 +1,9 @@
-<stack style="width: 454px; height: 454px;">
-    <div class="background" style="width: 454px; height: 454px; align-items: center; justify-content: center; background-color: #faf8ef;">
-      <div style="width: 311.9px; height: 311.9px; background-color: #bbada0; border-radius: 8px; align-items: center; justify-content: center; flex-direction: column;" on:swipe="onGridSwipe">
-        <div style="width: 311.9px; height: 70.5px; margin-top: 3.7px; margin-bottom: 3.7px; background-color: transparent; align-items: center; justify-content: center;" for="{{ grid }}">
-          <div style="width: 70.5px; height: 70.5px; margin-left: 3.7px; margin-right: 3.7px; border-radius: 4px; background-color: transparent;" for="{{ $item }}">
-            <div style="width: 70.5px; height: 70.5px; border-radius: 4px; align-items: center; justify-content: center; text-align: center; background-color: {{getCellBgColor($item)}};">
-              <text style="align-items: center; justify-content: center; text-align: center; color:{{ getCellColor($item) }}; font-size: {{ getCellFontSize($item)}};"
-                    >{{ ($item !== 0 ? $item : "") }}</text>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  <div style="width: 454px; height:71.0px; background-color: transparent; align-items: center; justify-content: center; flex-direction: column;">
-    <text style="color: #776e65;">当前 {{score}}</text>
-    <text style="color: #776e65;">最高 {{highScore}}</text>
+<stack style="width: 454px; height: 454px; background-color: #faf8ef;">
+  <div onswipe="onGridSwipe" style="width: 310px; height: 310px; left: 71px; top: 71px; background-color: #bbada0; padding: 3px; border-radius: 8px; flex-wrap: wrap;">
+    <text for="{{ grid }}" style="width: 70px; height: 70px; margin: 3px; border-radius: 4px; text-align: center; padding-top: 15px; background-color: {{ cellBgColor[$item] }}; color: {{ $item<8 ? '#776e65' : '#f9f6f2' }}; font-size: {{ $item<16384 ? '30px' : '26px' }};">{{ $item!==0 ? $item : " " }}</text>
   </div>
-  <div style="width: 136.2px; height: 43.8px; top: 396.6px; left: 158.9px; border-radius: 8px; background-color: #8f7a66; align-items: center; justify-content: center;" on:swipe="onReplaySwipe">
-    <text class="replay-text">重来 >></text>
-  </div>
-  <div style="width: 45.4px; height: 454px; background-color: {{showLeftSideSwipe?'#cc777777':'#00000000'}};"
-       on:swipe="onLeftSideSwipe">
-    <div style="width: 45.4px; height: 454px; background-color: transparent; align-items: center; justify-content: center;" if="{{ showLeftSideSwipe }}">
-      <text>{{'《 '}}</text>
-    </div>
-  </div>
-  <div class="top-side-swipe"
-       style="width: 454px; height: 45.4px; background-color: {{showTopSideSwipe?'#cc777777':'#00000000'}};"
-       on:swipe="onTopSideSwipe">
-    <div style="width: 454px; height: 45.4px; background-color: transparent; align-items: center; justify-content: center;" if="{{ showTopSideSwipe }}">
-      <text>关于</text>
-    </div>
-  </div>
+  <text class="text-wrap" style="width: 454px; height:71px; background-color: transparent; color: #776e65; text-align: center;">当前 {{score}}\n最高 {{highScore}}</text>
+  <text onswipe="onReplaySwipe" style="width: 136px; height: 43px; top: 396px; left: 158px; border-radius: 8px; background-color: #8f7a66; text-align: center; padding-top: 2px;">重来 >></text>
+  <text onswipe="onLeftSideSwipe" style="width: 908px; height: 908px; left: -863px; top: -227px; border-radius: 908px; background-color: {{showLeftSideSwipe?'#cc777777':'#00000000'}}; text-align: right; padding-top: 431.5px; padding-right: 12px;">{{showLeftSideSwipe ? '《' : ""}}</text>
+  <text onswipe="onTopSideSwipe" style="width: 908px; height: 908px; left: -227px; top: -863px; border-radius: 908px; background-color: {{showTopSideSwipe ? '#cc777777' : '#00000000'}}; padding-top: 865px; text-align: center;">{{showTopSideSwipe ? "关于" : ""}}</text>
 </stack>

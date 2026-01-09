@@ -79,16 +79,34 @@ export default {
       this.saveProgress();
     }
   },
-  onReplaySwipe(e) {
-    if (e.direction === "right") {
-      this.hiScore = Math.max(this.hiScore || 0, this.score || 0);
-      this.score = 0;
-      this.initGrid();
-      this.saveProgress();
-    }
+  // onReplaySwipe(e) {
+  //   if (e.direction === "right") {
+  //     this.hiScore = Math.max(this.hiScore || 0, this.score || 0);
+  //     this.score = 0;
+  //     this.initGrid();
+  //     this.saveProgress();
+  //   }
+  // },
+  // onUndoSwipe(e) {
+  //   if (e.direction === "left" && tracks.length >= 2) {
+  //     tracks.pop();
+  //     const data = tracks[tracks.length - 1];
+  //     for (let i = 0; i < 16; i++) grid[i] = data.grid[i];
+  //     this.score = data.score || 0;
+  //     this.hiScore = data.hiScore || 0;
+  //     rand = data.rand || Math.random();
+  //     this.refreshGrid();
+  //     this.saveProgress();
+  //   }
+  // },
+  onReplayClick(e) {
+    this.hiScore = Math.max(this.hiScore || 0, this.score || 0);
+    this.score = 0;
+    this.initGrid();
+    this.saveProgress();
   },
-  onUndoSwipe(e) {
-    if (e.direction === "left" && tracks.length >= 2) {
+  onUndoClick(e) {
+    if (tracks.length >= 2) {
       tracks.pop();
       const data = tracks[tracks.length - 1];
       for (let i = 0; i < 16; i++) grid[i] = data.grid[i];

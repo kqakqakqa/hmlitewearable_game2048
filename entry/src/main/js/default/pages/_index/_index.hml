@@ -5,16 +5,16 @@
     <div
       style="width: 286px; height: 98px; background-color: transparent; align-items: flex-end; justify-content: center; flex-wrap: wrap;">
       <div class="card" style="background-color: #edc22e;">
-        <text class="score-text">{{"分数 " + score}}</text>
+        <text class="score-text smaller-text">{{"分数 " + score}}</text>
       </div>
       <div class="card" style="background-color: #bbada0;">
-        <text class="score-text">{{"最高 " + hiScore}}</text>
+        <text class="score-text smaller-text">{{"最高 " + hiScore}}</text>
       </div>
-      <div on:swipe="onUndoSwipe" class="card" style="background-color: #8f7a66;">
-        <text class="score-text">{{"﹤撤回"}}</text>
+      <div on:click="onUndoClick" class="card" style="background-color: #8f7a66;">
+        <text class="score-text">{{"撤回"}}</text>
       </div>
-      <div on:swipe="onReplaySwipe" class="card" style="background-color: #8f7a66;">
-        <text class="score-text">{{"重来﹥"}}</text>
+      <div on:click="onReplayClick" class="card" style="background-color: #8f7a66;">
+        <text class="score-text">{{"重来"}}</text>
       </div>
     </div>
     <div

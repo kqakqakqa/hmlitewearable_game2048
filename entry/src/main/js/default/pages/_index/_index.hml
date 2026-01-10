@@ -5,10 +5,12 @@
     <div
       style="width: 286px; height: 98px; background-color: transparent; align-items: flex-end; justify-content: center; flex-wrap: wrap;">
       <div class="card" style="background-color: #edc22e;">
-        <text class="score-text smaller-text">{{"分数 " + score}}</text>
+        <text class="score-text text-26px">{{"分数 "}}</text>
+        <text class="score-text text-16px">{{score}}</text>
       </div>
       <div class="card" style="background-color: #bbada0;">
-        <text class="score-text smaller-text">{{"最高 " + hiScore}}</text>
+        <text class="score-text text-26px">{{"最高 "}}</text>
+        <text class="score-text text-16px">{{hiScore}}</text>
       </div>
       <div on:click="onUndoClick" class="card" style="background-color: #8f7a66;">
         <text class="score-text">{{"撤回"}}</text>

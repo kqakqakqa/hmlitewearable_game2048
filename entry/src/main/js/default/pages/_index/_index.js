@@ -1,8 +1,5 @@
-let grid = [];
-let rand = 0;
-const maxTracks = 2;
-let tracks = [];
-let moved = false;
+const size = 4;
+const maxTracks = 11;
 const moveRand = {
   up: 0.11,
   down: 0.23,
@@ -11,6 +8,10 @@ const moveRand = {
   top: 0.71,
   bottom: 0.89,
 };
+let grid = [];
+let rand = 0;
+let tracks = [];
+let moved = false;
 
 export default {
   data: {
@@ -91,7 +92,7 @@ export default {
   //   if (e.direction === "left" && tracks.length >= 2) {
   //     tracks.pop();
   //     const data = tracks[tracks.length - 1];
-  //     for (let i = 0; i < 16; i++) grid[i] = data.grid[i];
+  //     for (let i = 0; i < size * size; i++) grid[i] = data.grid[i];
   //     this.score = data.score || 0;
   //     this.hiScore = data.hiScore || 0;
   //     rand = data.rand || Math.random();
@@ -109,7 +110,7 @@ export default {
     if (tracks.length >= 2) {
       tracks.pop();
       const data = tracks[tracks.length - 1];
-      for (let i = 0; i < 16; i++) grid[i] = data.grid[i];
+      for (let i = 0; i < size * size; i++) grid[i] = data.grid[i];
       this.score = data.score || 0;
       this.hiScore = data.hiScore || 0;
       rand = data.rand || Math.random();
@@ -128,7 +129,7 @@ export default {
   },
   addTile() {
     let zeroTiles = [];
-    for (let i = 0; i < 16; i++) if (grid[i] === 0) zeroTiles.push(i);
+    for (let i = 0; i < size * size; i++) if (grid[i] === 0) zeroTiles.push(i);
     let idx = Math.floor(newRand() * zeroTiles.length);
     grid[zeroTiles[idx]] = newRand() < 0.9 ? 2 : 4;
   },
@@ -137,12 +138,13 @@ export default {
     const isReverse = (direction === "down" || direction === "bottom" || direction === "right");
 
     let i = 0, j, ij, j2, ij2, val, val2;
-    while (i < 4) {
+    while (i < size) {
       j = 0;
       j2 = 1;
-      while (j < 4 && j2 < 4) {
-        ij = i * (isRow ? 4 : 1) + (isReverse ? 3 - j : j) * (isRow ? 1 : 4);
-        ij2 = i * (isRow ? 4 : 1) + (isReverse ? 3 - j2 : j2) * (isRow ? 1 : 4);
+      while (j < size && j2 < size) {
+        ij = i * (isRow ? size : 1) + (isReverse ? (size - 1 - j) : j) * (isRow ? 1 : size);
+        ij2 = i * (isRow ? size : 1) + (isReverse ? (size - 1 - j2) : j2) * (isRow ? 1 : size);
+
         val = grid[ij];
         val2 = grid[ij2];
 
@@ -150,12 +152,12 @@ export default {
         } else if (val === 0) {
           grid[ij] = val2;
           grid[ij2] = 0;
-          moved = true
+          moved = true;
         } else if (val === val2) {
           grid[ij] += val;
           this.score += grid[ij];
           grid[ij2] = 0;
-          moved = true
+          moved = true;
           j++;
         } else {
           if (j + 1 === j2) j2++;
@@ -169,7 +171,7 @@ export default {
   },
   track() {
     const trackGrid = [];
-    for (let i = 0; i < 16; i++) trackGrid[i] = grid[i];
+    for (let i = 0; i < size * size; i++) trackGrid[i] = grid[i];
     tracks.push({
       grid: trackGrid,
       score: this.score,
@@ -182,7 +184,7 @@ export default {
   },
   refreshGrid() {
     // let val;
-    // for (let i = 0; i < 16; i++) {
+    // for (let i = 0; i < size * size; i++) {
     //   val = grid[i];
     //   this.showGrid[i] = grid[i];
     //   // this.showGrid[i].value = 0 + val || " ";

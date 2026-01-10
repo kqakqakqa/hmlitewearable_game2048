@@ -17,6 +17,10 @@
   color: #f9f6f2;
 }
 
-.smaller-text {
+.text-26px {
   font-size: 26px;
+}
+
+.text-16px {
+  font-size: 16px;
 }

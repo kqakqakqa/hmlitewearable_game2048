@@ -51,12 +51,11 @@ export default {
     });
     this.headerBar.triggerShowAnimation = headerBarAnimation.triggerShowAnimation;
 
-    $app.getImports().storage.get({
-      key: "game",
-      default: "",
-      success: str => {
-        if (str === "") return this.initGrid();
-        const data = JSON.parse(str)
+    $app.getImports().file.readText({
+      uri: "internal://app/kvstore/game",
+      fail: () => { return this.initGrid(); },
+      success: d => {
+        const data = JSON.parse(d.text);
         grid = data.grid;
         this.score = data.score || 0;
         this.hiScore = data.hiScore || 0;
@@ -65,6 +64,20 @@ export default {
         this.refreshGrid();
       }
     });
+    // $app.getImports().storage.get({
+    //   key: "game",
+    //   default: "",
+    //   success: str => {
+    //     if (str === "") return this.initGrid();
+    //     const data = JSON.parse(str)
+    //     grid = data.grid;
+    //     this.score = data.score || 0;
+    //     this.hiScore = data.hiScore || 0;
+    //     rand = data.rand || Math.random();
+    //     this.track();
+    //     this.refreshGrid();
+    //   }
+    // });
   },
   onDestroy() {
     this.saveProgress();
@@ -100,13 +113,13 @@ export default {
   //     this.saveProgress();
   //   }
   // },
-  onReplayClick(e) {
+  onReplayClick() {
     this.hiScore = Math.max(this.hiScore || 0, this.score || 0);
     this.score = 0;
     this.initGrid();
     this.saveProgress();
   },
-  onUndoClick(e) {
+  onUndoClick() {
     if (tracks.length >= 2) {
       tracks.pop();
       const data = tracks[tracks.length - 1];
@@ -195,15 +208,24 @@ export default {
     this.showGrid = grid;
   },
   saveProgress() {
-    $app.getImports().storage.set({
-      key: "game",
-      value: JSON.stringify({
+    $app.getImports().file.writeText({
+      uri: "internal://app/kvstore/game",
+      text: JSON.stringify({
         grid: grid,
         score: this.score,
         hiScore: this.hiScore,
         rand: rand,
       }),
     });
+    // $app.getImports().storage.set({
+    //   key: "game",
+    //   value: JSON.stringify({
+    //     grid: grid,
+    //     score: this.score,
+    //     hiScore: this.hiScore,
+    //     rand: rand,
+    //   }),
+    // });
   },
   onHeaderBarSwipe(data) {
     if (data.direction !== "down" && data.direction !== "bottom") return;
